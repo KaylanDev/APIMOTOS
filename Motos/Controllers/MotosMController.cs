@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Motos.Data;
 using Motos.Model;
 
@@ -62,8 +64,31 @@ namespace Motos.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro interno");
             }
-           
             
+        }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Put(MotosM m, int id)
+        {
+            if (id != m.Id) return BadRequest("insira o id correto");
+            _db.Entry(m).State = EntityState.Modified;
+            _db.SaveChanges();
+
+            return Ok(m);
+
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult<MotosM> Delete(int id) {
+            var moto = _db.MotosM.FirstOrDefault(m => m.Id == id);
+            
+            if (moto is null) return BadRequest("objeto nulo");
+
+          
+            _db.MotosM.Remove(moto);
+            _db.SaveChanges();
+            return Ok(moto);
+        
         }
         
     }
