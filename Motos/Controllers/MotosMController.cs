@@ -17,24 +17,52 @@ namespace Motos.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MotosM>> Get()
         {
+
+            try
+            {
             return _db.MotosM.ToList();
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro interno");
+            }
         }
 
         [HttpGet("{id:int}",Name = "motos")]
        public ActionResult<MotosM> GetOne(int id)
         {
+            try
+            {
             return _db.MotosM.FirstOrDefault(moto => moto.Id == id);
+
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro interno");
+            }
         }
 
         [HttpPost]
         public ActionResult Post(MotosM m)
         {
-            if (m is null) return BadRequest("vc n preencheu");
+            try
+            {
+                if (m is null) return BadRequest("vc n preencheu");
 
-            _db.MotosM.Add(m);
-            _db.SaveChanges();
+                _db.MotosM.Add(m);
+                _db.SaveChanges();
 
-            return new CreatedAtRouteResult("motos", new { Id = m.Id},m);
+                return new CreatedAtRouteResult("motos", new { Id = m.Id }, m);
+
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro interno");
+            }
+           
             
         }
         
