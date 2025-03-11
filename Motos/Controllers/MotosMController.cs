@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Motos.Data;
 using Motos.Model;
+using Motos.Repository;
+using System.Threading.Tasks;
 
 namespace Motos.Controllers
 {
@@ -10,83 +12,63 @@ namespace Motos.Controllers
     [ApiController]
     public class MotosMController : ControllerBase
     {
-        private readonly AppDbContext _db;
-        public MotosMController(AppDbContext db)
+        private readonly IUnitOfWork _uof;
+        private readonly AppDbContext _conxtex;
+        public MotosMController(IUnitOfWork uof,AppDbContext context)
+
         {
-            _db = db;
+            _conxtex = context;
+            _uof = uof;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<MotosM>> Get()
+        public async Task<ActionResult<IEnumerable<MotosM>>> Get()
         {
-
-            try
-            {
-            return _db.MotosM.ToList();
-
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro interno");
-            }
+            var motos = await _uof.MotosRepo.Get();
+            return Ok(motos);
         }
 
-        [HttpGet("{id:int}",Name = "motos")]
-       public ActionResult<MotosM> GetOne(int id)
+        [HttpGet("{id:int}",Name = "Moto")]
+       public async Task<ActionResult<MotosM>> GetById(int id)
         {
-            try
+            if (id <= 0)
             {
-            return _db.MotosM.FirstOrDefault(moto => moto.Id == id);
-
+                return BadRequest("id is invalid!");
             }
-            catch (Exception)
-            {
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro interno");
-            }
+            var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
+            if (moto is null) return BadRequest("Object is null!");
+
+            return Ok(moto);
         }
 
         [HttpPost]
-        public ActionResult Post(MotosM m)
+        public async Task<ActionResult> Post(MotosM moto)
         {
-            try
-            {
-                if (m is null) return BadRequest("vc n preencheu");
-
-                _db.MotosM.Add(m);
-                _db.SaveChanges();
-
-                return new CreatedAtRouteResult("motos", new { Id = m.Id }, m);
-
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro interno");
-            }
-            
+            if (!ModelState.IsValid) return BadRequest();
+            _uof.MotosRepo.Create(moto);
+          await  _uof.Commit();
+            return Ok(moto);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult Put(MotosM m, int id)
+        public async Task<ActionResult> Put(MotosM moto, int id)
         {
-            if (id != m.Id) return BadRequest("insira o id correto");
-            _db.Entry(m).State = EntityState.Modified;
-            _db.SaveChanges();
+            if (id != moto.Id) return BadRequest("insira o id correto");
+            _uof.MotosRepo.Update(moto);
+            await _uof.Commit();
 
-            return Ok(m);
+            return Ok(moto);
 
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult<MotosM> Delete(int id) {
-            var moto = _db.MotosM.FirstOrDefault(m => m.Id == id);
+        public async Task<ActionResult<MotosM>> Delete(int id) {
+            var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
             
             if (moto is null) return BadRequest("objeto nulo");
-
-          
-            _db.MotosM.Remove(moto);
-            _db.SaveChanges();
+            _uof.MotosRepo.Delete(moto);
+           await _uof.Commit();
             return Ok(moto);
         
         }
