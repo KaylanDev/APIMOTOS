@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Motos.Data;
@@ -13,11 +15,11 @@ namespace Motos.Controllers
     public class MotosMController : ControllerBase
     {
         private readonly IUnitOfWork _uof;
-        private readonly AppDbContext _conxtex;
-        public MotosMController(IUnitOfWork uof,AppDbContext context)
+        
+        public MotosMController(IUnitOfWork uof)
 
         {
-            _conxtex = context;
+           
             _uof = uof;
         }
 
@@ -40,6 +42,19 @@ namespace Motos.Controllers
             if (moto is null) return BadRequest("Object is null!");
 
             return Ok(moto);
+        }
+
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult<MotosM>> Patch(JsonPatchDocument<MotosM> jsonPatch,int id)
+        {
+            var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
+            if (moto is null) return BadRequest("objeto is null!");
+            jsonPatch.ApplyTo(moto);
+            if (!ModelState.IsValid) return BadRequest();
+
+            _uof.MotosRepo.Update(moto);
+            await _uof.Commit();
+            return moto;
         }
 
         [HttpPost]
