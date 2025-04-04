@@ -29,7 +29,7 @@ namespace Motos.Controllers
         {
             var motos = await _uof.MotosRepo.Get();
 
-            var motosDto = MotosDto.List(motos);
+            var motosDto = MotosDto.MotosMToDtoList(motos);
             return Ok(motosDto);
         }
 
@@ -43,7 +43,7 @@ namespace Motos.Controllers
 
             var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
             if (moto is null) return BadRequest("Object is null!");
-            var motodto = new MotosDto(moto);
+            var motodto =  MotosDto.MotosMToDto(moto);
 
             return Ok(motodto);
         }
@@ -62,46 +62,18 @@ namespace Motos.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(MotosM moto)
+        public async Task<ActionResult> Post(MotosDto motoDto)
         {
             if (!ModelState.IsValid) return BadRequest();
+            var moto = MotosDto.DtoToMotosMPost(motoDto);
             _uof.MotosRepo.Create(moto);
           await  _uof.Commit();
             return Ok(moto);
         }
-        private async Task<string> addmarca()
-        {
-            var marca = await _uof.MarcaRepo.GetById(m => m.MarcaId == 2);
-
-            var motos = await _uof.MotosRepo.Get();
-
-            foreach (var moto in motos) {
-
-                moto.MarcaId = marca.MarcaId;
-                moto.MarcaMoto = marca.NomeMarca;
-            
-            }
-            
-
-            if (motos.Any(c=> c.MarcaMoto == null))
-            {
-                return "deu ruim";
-
-            }
-            await _uof.Commit();
-            return "deu bom";
-
-        }
+   
 
 
-        [HttpGet("addMarca")]
-        public   async Task<ActionResult<string>> add()
-        {
-
-            string o = await addmarca();
-
-            return o;
-        }
+     
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(MotosM moto, int id)

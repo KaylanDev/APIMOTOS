@@ -1,8 +1,10 @@
-﻿namespace Motos.Model.Dtos
+﻿using Motos.Repository;
+
+namespace Motos.Model.Dtos
 {
     public class MotosDto
     {
-
+  
         public int Id { get; set; }
 
         public string? Modelo { get; set; }
@@ -15,22 +17,34 @@
 
         public string? MarcaMoto { get; set; }
 
-        public MotosDto(MotosM moto)
+        public MotosDto()
         {
-            Id = moto.Id;
-            Modelo = moto.Modelo;
-            Potencia = moto.Potencia;
-            Preco = moto.Preco;
-            Imagem = moto.Imagem;
-            MarcaMoto = moto.MarcaMoto;
+         
         }
 
-        public static IEnumerable<MotosDto> List(IEnumerable<MotosM> motos)
+        public static Moto MotosMToDto(MotosM moto)
+        {
+            var motoDto = new MotosDto
+            {
+                Id = moto.Id,
+                Modelo = moto.Modelo,
+                Potencia = moto.Potencia,
+                Preco = moto.Preco,
+                Imagem = moto.Imagem,
+                MarcaMoto = moto.MarcaMoto
+            };
+
+            return motoDto;
+            
+        }
+
+        public static IEnumerable<MotosDto> MotosMToDtoList(IEnumerable<MotosM> motos)
         {
             List<MotosDto> motosDto = new List<MotosDto>();
             foreach (var moto in motos)
             {
-                motosDto.Add(new MotosDto(moto));
+                var dto = MotosDto.MotosMToDto(moto);
+                motosDto.Add(dto);
             }
 
             IEnumerable<MotosDto> m = motosDto;
@@ -38,5 +52,32 @@
             return m;
 
         }
+
+        public static MotosM DtoToMotosM (MotosDto moto)
+        {
+            return new MotosM
+            {
+                Id = moto.Id,
+                Modelo = moto.Modelo,
+                Potencia = moto.Potencia,
+                Preco = moto.Preco,
+                Imagem = moto.Imagem,
+                MarcaMoto = moto.MarcaMoto
+            };
+        }
+
+        public static MotosM DtoToMotosMPost(MotosDto moto)
+        {
+            return new MotosM
+            {
+                
+                Modelo = moto.Modelo,
+                Potencia = moto.Potencia,
+                Preco = moto.Preco,
+                Imagem = moto.Imagem,
+                MarcaMoto = moto.MarcaMoto
+            };
+        }
+
     }
 }

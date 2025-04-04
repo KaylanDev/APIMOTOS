@@ -28,7 +28,7 @@ namespace Motos.Repository
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
-        public T Create(T entry)
+        public virtual T Create(T entry)
         {
             _context.Set<T>().Add(entry);
             return entry;
