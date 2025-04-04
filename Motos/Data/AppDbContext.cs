@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using Motos.Model;
 
 namespace Motos.Data
@@ -10,5 +11,8 @@ namespace Motos.Data
         }
 
         public DbSet<MotosM> MotosM { get; set; }
+        public DbSet<Marca> Marca { get; set; }
+
+
     }
 }

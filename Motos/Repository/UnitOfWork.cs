@@ -8,6 +8,8 @@ namespace Motos.Repository
     {
         private IMotosRepo _motosRepo;
 
+        private IMarcaRepo _marcaRepo;
+
         public AppDbContext context;
 
         public UnitOfWork( AppDbContext context)
@@ -24,7 +26,15 @@ namespace Motos.Repository
             }
         }
 
-       
+        public IMarcaRepo MarcaRepo
+        {
+            get
+            {
+                return _marcaRepo = _marcaRepo ?? new MarcaRepo(context);
+            }
+        }
+
+
 
         public async Task Commit()
         {

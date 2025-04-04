@@ -65,6 +65,39 @@ namespace Motos.Controllers
           await  _uof.Commit();
             return Ok(moto);
         }
+        private async Task<string> addmarca()
+        {
+            var marca = await _uof.MarcaRepo.GetById(m => m.MarcaId == 2);
+
+            var motos = await _uof.MotosRepo.Get();
+
+            foreach (var moto in motos) {
+
+                moto.MarcaId = marca.MarcaId;
+                moto.Marca = marca;
+            
+            }
+            
+
+            if (motos.Any(c=> c.MarcaId == null))
+            {
+                return "deu ruim";
+
+            }
+
+            return "deu bom";
+
+        }
+
+
+        [HttpGet("addMarca")]
+        public   async Task<ActionResult<string>> add()
+        {
+
+            string o = await addmarca();
+
+            return o;
+        }
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(MotosM moto, int id)
