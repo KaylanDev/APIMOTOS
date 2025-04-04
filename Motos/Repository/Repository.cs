@@ -11,21 +11,23 @@ namespace Motos.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
 
         public Repository(AppDbContext context)
         {
             _context = context;
         }
-        public async Task<IEnumerable<T>> Get()
+
+        public virtual async Task<IEnumerable<T>> Get()
         {
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetById(Expression<Func<T, bool>> predicate)
+        public virtual async Task<T> GetById(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
+
         public T Create(T entry)
         {
             _context.Set<T>().Add(entry);
@@ -37,8 +39,6 @@ namespace Motos.Repository
             _context.Set<T>().Remove(entry);
             return entry;
         }
-
-
 
         public T Update(T entry)
         {

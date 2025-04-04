@@ -11,6 +11,10 @@ namespace Motos.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 
+            migrationBuilder.DropColumn(
+              name: "Marca",
+             table: "MotosM");
+
         }
 
         /// <inheritdoc />

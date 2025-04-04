@@ -20,6 +20,7 @@ namespace Motos.Model.Validator
                 .LessThan(1000000).WithMessage("O preço deve ser menor que 1.000.000");
 
             RuleFor(m => m.Imagem).MinimumLength(5).WithMessage("a url da imagem deve ser maior q 5 caracteres");
+
         }
     }
 }

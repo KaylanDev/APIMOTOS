@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Motos.Data;
 using Motos.Model;
+using Motos.Model.Dtos;
 using Motos.Repository;
 using System.Threading.Tasks;
 
@@ -24,14 +25,16 @@ namespace Motos.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MotosM>>> Get()
+        public async Task<ActionResult<IEnumerable<MotosDto>>> Get()
         {
             var motos = await _uof.MotosRepo.Get();
-            return Ok(motos);
+
+            var motosDto = MotosDto.List(motos);
+            return Ok(motosDto);
         }
 
         [HttpGet("{id:int}",Name = "Moto")]
-       public async Task<ActionResult<MotosM>> GetById(int id)
+       public async Task<ActionResult<MotosDto>> GetById(int id)
         {
             if (id <= 0)
             {
@@ -40,8 +43,9 @@ namespace Motos.Controllers
 
             var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
             if (moto is null) return BadRequest("Object is null!");
+            var motodto = new MotosDto(moto);
 
-            return Ok(moto);
+            return Ok(motodto);
         }
 
         [HttpPatch("{id:int}")]
@@ -74,17 +78,17 @@ namespace Motos.Controllers
             foreach (var moto in motos) {
 
                 moto.MarcaId = marca.MarcaId;
-                moto.Marca = marca;
+                moto.MarcaMoto = marca.NomeMarca;
             
             }
             
 
-            if (motos.Any(c=> c.MarcaId == null))
+            if (motos.Any(c=> c.MarcaMoto == null))
             {
                 return "deu ruim";
 
             }
-
+            await _uof.Commit();
             return "deu bom";
 
         }

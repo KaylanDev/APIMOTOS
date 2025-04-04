@@ -25,6 +25,14 @@ namespace Motos.Controllers
 
             return Ok(marcas);
         }
+
+        [HttpGet("MOTOS DA MARCA")]
+        public ActionResult<IEnumerable<Marca>> getMarcas()
+        {
+            var motos = _uof.MarcaRepo.MotosMarca();
+            return Ok(motos);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Marca>> Post(Marca marca) {
 

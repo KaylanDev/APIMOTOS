@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace Motos.Model;
 
@@ -16,10 +16,13 @@ public class MotosM
     public decimal Preco { get; set; }
 
     public string? Imagem { get; set; }
-
+    
     public int? MarcaId { get; set; }
+    
+    [JsonIgnore]
+    public Marca? Marca { get; set; }
 
-    public Marca Marca { get; set; }
+    public string? MarcaMoto { get; set; }
 
 
 
