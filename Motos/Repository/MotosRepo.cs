@@ -10,14 +10,14 @@ namespace Motos.Repository
         {
         }
 
-        public override async Task<IEnumerable<MotosM>> Get()
+        public override async Task<IEnumerable<MotosM>> GetAsync()
         {
             return await _context.MotosM
                 .Include(m => m.Marca)
                 .ToListAsync();
         }
 
-        public override async Task<MotosM> GetById(System.Linq.Expressions.Expression<Func<MotosM, bool>> predicate)
+        public override async Task<MotosM> GetByIdAsync(System.Linq.Expressions.Expression<Func<MotosM, bool>> predicate)
         {
 #pragma warning disable CS8603 // Possível retorno de referência nula.
             return await _context.MotosM
@@ -26,17 +26,6 @@ namespace Motos.Repository
 #pragma warning restore CS8603 // Possível retorno de referência nula.
         }
 
-        public override MotosM Create(MotosM entry)
-        {
-            var Marca = _context.Marca.FirstOrDefault(m => m.NomeMarca == entry.MarcaMoto);
-
-            if (Marca == null)
-            {
-                throw new ArgumentNullException("Marca inexistente");
-            }
-
-            entry.MarcaId = Marca.MarcaId;
-            return base.Create(entry);
-        }
+        
     }
 }

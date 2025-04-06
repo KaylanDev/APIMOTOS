@@ -18,12 +18,12 @@ namespace Motos.Repository
             _context = context;
         }
 
-        public virtual async Task<IEnumerable<T>> Get()
+        public virtual async Task<IEnumerable<T>> GetAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
 
-        public virtual async Task<T> GetById(Expression<Func<T, bool>> predicate)
+        public virtual async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }

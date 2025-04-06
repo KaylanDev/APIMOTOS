@@ -22,7 +22,7 @@ public class MotosM
     [JsonIgnore]
     public Marca? Marca { get; set; }
 
-    public string? MarcaMoto { get; set; }
+    
 
 
 

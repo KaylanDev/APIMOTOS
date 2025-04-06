@@ -21,7 +21,7 @@ namespace Motos.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Marca>>> Get()
         {
-           var marcas = await _uof.MarcaRepo.Get();
+           var marcas = await _uof.MarcaRepo.GetAsync();
 
             return Ok(marcas);
         }

@@ -27,7 +27,7 @@ namespace Motos.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MotosDto>>> Get()
         {
-            var motos = await _uof.MotosRepo.Get();
+            var motos = await _uof.MotosRepo.GetAsync();
 
             var motosDto = MotosDto.MotosMToDtoList(motos);
             return Ok(motosDto);
@@ -41,7 +41,7 @@ namespace Motos.Controllers
                 return BadRequest("id is invalid!");
             }
 
-            var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
+            var moto = await _uof.MotosRepo.GetByIdAsync(m => m.Id == id);
             if (moto is null) return BadRequest("Object is null!");
             var motodto =  MotosDto.MotosMToDto(moto);
 
@@ -51,7 +51,7 @@ namespace Motos.Controllers
         [HttpPatch("{id:int}")]
         public async Task<ActionResult<MotosM>> Patch(JsonPatchDocument<MotosM> jsonPatch,int id)
         {
-            var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
+            var moto = await _uof.MotosRepo.GetByIdAsync(m => m.Id == id);
             if (moto is null) return BadRequest("objeto is null!");
             jsonPatch.ApplyTo(moto);
             if (!ModelState.IsValid) return BadRequest();
@@ -62,10 +62,9 @@ namespace Motos.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(MotosDto motoDto)
+        public async Task<ActionResult> Post(MotosM moto)
         {
             if (!ModelState.IsValid) return BadRequest();
-            var moto = MotosDto.DtoToMotosMPost(motoDto);
             _uof.MotosRepo.Create(moto);
           await  _uof.Commit();
             return Ok(moto);
@@ -88,7 +87,7 @@ namespace Motos.Controllers
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<MotosM>> Delete(int id) {
-            var moto = await _uof.MotosRepo.GetById(m => m.Id == id);
+            var moto = await _uof.MotosRepo.GetByIdAsync(m => m.Id == id);
             
             if (moto is null) return BadRequest("objeto nulo");
             _uof.MotosRepo.Delete(moto);
