@@ -42,7 +42,7 @@ namespace Motos.Repository
 
         public T Update(T entry)
         {
-            _context.Update(entry);
+            _context.Set<T>().Update(entry);
             return entry;
         }
     }
