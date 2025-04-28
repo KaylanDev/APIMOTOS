@@ -12,7 +12,7 @@ public class MotosDto
     public int Potencia { get; set; }
 
     public decimal Preco { get; set; }
-    public string Marca { get; set; }
+    public string? Marca { get; set; }
     public string? Imagem { get; set; }
 
    
