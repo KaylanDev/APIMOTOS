@@ -71,9 +71,6 @@ namespace Motos.Controllers
         }
    
 
-
-     
-
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(MotosM moto, int id)
         {

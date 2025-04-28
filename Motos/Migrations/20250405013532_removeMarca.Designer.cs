@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Motos.Data;
 
@@ -10,9 +11,11 @@ using Motos.Data;
 namespace Motos.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250405013532_removeMarca")]
+    partial class removeMarca
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace Motos.Migrations
 
                     b.HasKey("MarcaId");
 
-                    b.ToTable("Marca", (string)null);
+                    b.ToTable("Marca");
                 });
 
             modelBuilder.Entity("Motos.Model.MotosM", b =>
@@ -65,7 +68,7 @@ namespace Motos.Migrations
 
                     b.HasIndex("MarcaId");
 
-                    b.ToTable("MotosM", (string)null);
+                    b.ToTable("MotosM");
                 });
 
             modelBuilder.Entity("Motos.Model.MotosM", b =>

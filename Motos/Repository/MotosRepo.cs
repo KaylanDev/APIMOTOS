@@ -14,18 +14,16 @@ namespace Motos.Repository
         {
             return await _context.MotosM
                 .Include(m => m.Marca)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         public override async Task<MotosM> GetByIdAsync(System.Linq.Expressions.Expression<Func<MotosM, bool>> predicate)
         {
-#pragma warning disable CS8603 // Possível retorno de referência nula.
             return await _context.MotosM
                 .Include(m => m.Marca)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(predicate);
-#pragma warning restore CS8603 // Possível retorno de referência nula.
         }
-
-        
     }
 }
