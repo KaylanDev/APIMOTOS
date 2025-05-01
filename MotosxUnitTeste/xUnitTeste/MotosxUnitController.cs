@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Motos.API.Data;
-using Motos.API.Repository;
+using Motos.Application.Interfaces;
+using Motos.Application.Services;
+using Motos.Infrastruture.Context;
+using Motos.Infrastruture.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,11 @@ namespace MotosxUnitTeste.xUnitTeste
 {
     public class MotosxUnitController
     {
-        public IUnitOfWork uof;
+        public IMotosMService motos;
+       
         public static DbContextOptions<AppDbContext> dbContextOptions { get; }
 
-        public static string conectionString = "Data Source=SHEISLINDA;Initial Catalog=MotosProject;Integrated Security=True;Trust Server Certificate=True";
+        public static string conectionString = "Data Source=SHEISLINDA;Initial Catalog=MotosAPI;Integrated Security=True;Trust Server Certificate=True";
         static MotosxUnitController()
         {
             dbContextOptions = new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(conectionString).Options;
@@ -25,7 +28,7 @@ namespace MotosxUnitTeste.xUnitTeste
         {
 
             var context = new AppDbContext(dbContextOptions);
-            uof = new UnitOfWork(context);
+            motos = new MotosMService(new MotosMRepository(context));
 
         }
 

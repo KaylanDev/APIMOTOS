@@ -17,7 +17,7 @@ namespace MotosxUnitTeste
 
         public MotosTestexUnit(MotosxUnitController conntroler)
         {
-            controller = new MotosMController(conntroler.uof);
+            controller = new MotosMController(conntroler.motos);
         }
 
         [Fact]
@@ -27,7 +27,8 @@ namespace MotosxUnitTeste
             var data = await controller.Get();
 
             //Assert
-            data.Result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be(200);
+            //data.Result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be(200);
+            data.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be(200);
 
         }
     }

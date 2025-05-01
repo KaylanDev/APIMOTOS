@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Motos.API.Model;
-using Motos.API.Repository;
+
+using Motos.Application.Interfaces;
+using Motos.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace Motos.API.Controllers
@@ -11,36 +13,36 @@ namespace Motos.API.Controllers
     [ApiController]
     public class MarcaController : ControllerBase
     {
-        private readonly IUnitOfWork _uof;
+        private readonly IMarcaService _uof;
 
-        public MarcaController(IUnitOfWork uof)
+        public MarcaController(IMarcaService uof)
         {
             _uof = uof;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Marca>>> Get()
+        public async Task<ActionResult> Get()
         {
-           var marcas = await _uof.MarcaRepo.GetAsync();
+           var marcas = await _uof.GetMarcas();
 
             return Ok(marcas);
         }
 
-        [HttpGet("MOTOS DA MARCA")]
-        public ActionResult<IEnumerable<Marca>> getMarcas()
+       /*[HttpGet("MOTOS DA MARCA")]
+        public Task<ActionResult> getMarcas()
         {
-            var motos = _uof.MarcaRepo.MotosMarca();
+            var motos = _motosService.
             return Ok(motos);
         }
-
+        */
         [HttpPost]
-        public async Task<ActionResult<Marca>> Post(Marca marca) {
+        public async Task<ActionResult> Post(Marca marca) {
 
             if (!ModelState.IsValid) return BadRequest();
 
 
-            _uof.MarcaRepo.Create(marca);
-            await _uof.Commit();
+          await _uof.Create(marca);
+           
             return Ok(marca)
                 ;
         }

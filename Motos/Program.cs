@@ -1,9 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Motos.API.Data;
 using Motos.API.Model.Validator;
-using Motos.API.Repository;
+
+using Motos.CrossCutting.IoC;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,10 +23,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 
 
-builder.Services.AddValidatorsFromAssemblyContaining<MotoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<MarcaValidator>();
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.Addinfrastruture(builder.Configuration);
 
 
 
@@ -34,12 +31,8 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("sqlserver")));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IMotosRepo, MotosRepo>();
-builder.Services.AddScoped<IMarcaRepo, MarcaRepo>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
 
 var app = builder.Build();
 
