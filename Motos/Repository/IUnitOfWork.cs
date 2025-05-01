@@ -1,4 +1,4 @@
-﻿namespace Motos.Repository
+﻿namespace Motos.API.Repository
 {
     public interface IUnitOfWork
     {

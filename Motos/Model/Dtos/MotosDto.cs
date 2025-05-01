@@ -1,6 +1,4 @@
-﻿using Motos.Repository;
-
-namespace Motos.Model.Dtos;
+﻿namespace Motos.API.Model.Dtos;
 
 public class MotosDto
 {
@@ -47,7 +45,7 @@ public class MotosDto
         foreach (var moto in motos)
         {
 
-            var dto = MotosDto.MotosMToDto(moto);
+            var dto = MotosMToDto(moto);
             motosDto.Add(dto);
         }
 

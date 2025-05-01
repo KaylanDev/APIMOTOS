@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using Motos.Data;
-using Motos.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Motos.API.Data;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 
-namespace Motos.Repository
+namespace Motos.API.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {

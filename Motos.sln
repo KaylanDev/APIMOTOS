@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motos", "Motos\Motos.csproj", "{632A8238-FE7C-42DE-A515-E43587031BDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motos.API", "Motos\Motos.API.csproj", "{632A8238-FE7C-42DE-A515-E43587031BDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotosxUnitTeste", "MotosxUnitTeste\MotosxUnitTeste.csproj", "{7404BDC3-725E-4DE8-9FB7-6801B8E2404B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motos.Domain", "Motos.Domain\Motos.Domain.csproj", "{CBA842B6-7C25-4F1E-9CBC-9676288E6FC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motos.Infrastruture", "Motos.Infrastruture\Motos.Infrastruture.csproj", "{779B893E-3CE4-440B-95FA-E7851D08FCC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motos.Application", "Motos.Application\Motos.Application.csproj", "{31B66CB2-3954-48D7-914E-D8E1F32492B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motos.CrossCutting", "Motos.CrossCutting\Motos.CrossCutting.csproj", "{D7473A04-DDF5-4988-962F-F8DD69532B5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{7404BDC3-725E-4DE8-9FB7-6801B8E2404B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7404BDC3-725E-4DE8-9FB7-6801B8E2404B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7404BDC3-725E-4DE8-9FB7-6801B8E2404B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA842B6-7C25-4F1E-9CBC-9676288E6FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA842B6-7C25-4F1E-9CBC-9676288E6FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA842B6-7C25-4F1E-9CBC-9676288E6FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA842B6-7C25-4F1E-9CBC-9676288E6FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{779B893E-3CE4-440B-95FA-E7851D08FCC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{779B893E-3CE4-440B-95FA-E7851D08FCC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{779B893E-3CE4-440B-95FA-E7851D08FCC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{779B893E-3CE4-440B-95FA-E7851D08FCC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31B66CB2-3954-48D7-914E-D8E1F32492B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31B66CB2-3954-48D7-914E-D8E1F32492B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31B66CB2-3954-48D7-914E-D8E1F32492B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31B66CB2-3954-48D7-914E-D8E1F32492B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7473A04-DDF5-4988-962F-F8DD69532B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7473A04-DDF5-4988-962F-F8DD69532B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7473A04-DDF5-4988-962F-F8DD69532B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7473A04-DDF5-4988-962F-F8DD69532B5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

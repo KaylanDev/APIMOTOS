@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace Motos.Model;
+namespace Motos.API.Model;
 
 public class MotosM
 {

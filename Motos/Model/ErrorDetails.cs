@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Motos.Model
+namespace Motos.API.Model
 {
     public class ErrorDetails
     {

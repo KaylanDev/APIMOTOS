@@ -1,4 +1,4 @@
-﻿namespace Motos.Service
+﻿namespace Motos.API.Service
 {
     public class ITokenSevice
     {

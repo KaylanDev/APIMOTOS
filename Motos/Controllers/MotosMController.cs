@@ -1,15 +1,10 @@
-﻿using Azure;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Motos.Data;
-using Motos.Model;
-using Motos.Model.Dtos;
-using Motos.Repository;
-using System.Threading.Tasks;
+using Motos.API.Model;
+using Motos.API.Model.Dtos;
+using Motos.API.Repository;
 
-namespace Motos.Controllers
+namespace Motos.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

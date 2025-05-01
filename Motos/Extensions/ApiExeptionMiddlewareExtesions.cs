@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using Motos.Model;
+using Motos.API.Model;
 using System.Net;
 
-namespace Motos.Extensions;
+namespace Motos.API.Extensions;
 
 public static class ApiExeptionMiddlewareExtesions
 {

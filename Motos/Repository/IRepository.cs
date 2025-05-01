@@ -1,7 +1,6 @@
-﻿using Motos.Model;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace Motos.Repository
+namespace Motos.API.Repository
 {
     public interface IRepository<T> where T : class
     {

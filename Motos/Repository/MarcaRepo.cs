@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Motos.Data;
-using Motos.Model;
+using Motos.API.Data;
+using Motos.API.Model;
 using System.Linq.Expressions;
 
-namespace Motos.Repository
+namespace Motos.API.Repository
 {
     public class MarcaRepo : Repository<Marca>, IMarcaRepo
     {

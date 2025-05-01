@@ -1,11 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Motos.Data;
-using Motos.Extensions;
-using Motos.Model.Validator;
-using Motos.Repository;
+using Motos.API.Data;
+using Motos.API.Model.Validator;
+using Motos.API.Repository;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

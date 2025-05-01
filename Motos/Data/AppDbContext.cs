@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Motos.API.Model;
 
-using Motos.Model;
-
-namespace Motos.Data
+namespace Motos.API.Data
 {
     public class AppDbContext : DbContext
     {

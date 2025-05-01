@@ -1,7 +1,7 @@
-﻿using Motos.Model;
+﻿using Motos.API.Model;
 using System.Linq.Expressions;
 
-namespace Motos.Repository
+namespace Motos.API.Repository
 {
     public interface IMarcaRepo : IRepository<Marca>
     {

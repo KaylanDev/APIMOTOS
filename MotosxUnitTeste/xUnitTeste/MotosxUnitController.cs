@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Motos.Data;
-using Motos.Repository;
+using Motos.API.Data;
+using Motos.API.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

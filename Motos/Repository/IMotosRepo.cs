@@ -1,6 +1,6 @@
-﻿using Motos.Model;
+﻿using Motos.API.Model;
 
-namespace Motos.Repository
+namespace Motos.API.Repository
 {
     public interface IMotosRepo : IRepository<MotosM>
     {

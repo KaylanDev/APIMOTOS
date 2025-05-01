@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Motos.Controllers;
+using Motos.API.Controllers;
 using MotosxUnitTeste.xUnitTeste;
 using System;
 using System.Collections.Generic;

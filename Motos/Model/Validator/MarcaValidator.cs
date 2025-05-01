@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Motos.Model.Validator
+namespace Motos.API.Model.Validator
 {
     public class MarcaValidator : AbstractValidator<Marca>
     {

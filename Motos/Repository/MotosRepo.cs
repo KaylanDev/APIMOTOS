@@ -1,8 +1,8 @@
-﻿using Motos.Data;
-using Motos.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Motos.API.Model;
+using Motos.API.Data;
 
-namespace Motos.Repository
+namespace Motos.API.Repository
 {
     public class MotosRepo : Repository<MotosM>, IMotosRepo
     {

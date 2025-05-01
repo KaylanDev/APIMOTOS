@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Motos.Model;
-using Motos.Repository;
+using Motos.API.Model;
+using Motos.API.Repository;
 using System.Threading.Tasks;
 
-namespace Motos.Controllers
+namespace Motos.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
