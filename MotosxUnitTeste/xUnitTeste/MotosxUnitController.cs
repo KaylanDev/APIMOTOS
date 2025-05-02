@@ -28,7 +28,7 @@ namespace MotosxUnitTeste.xUnitTeste
         {
 
             var context = new AppDbContext(dbContextOptions);
-            motos = new MotosMService(new MotosMRepository(context));
+            motos = new MotosMService(new MotosMRepository(context),new MarcaRepository(context));
 
         }
 

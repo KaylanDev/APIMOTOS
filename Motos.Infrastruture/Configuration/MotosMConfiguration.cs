@@ -15,6 +15,9 @@ namespace Motos.Infrastruture.Configuration
         public void Configure(EntityTypeBuilder<MotosM> builder)
         {
             builder.HasKey(m => m.Id);
+            builder.Property(m => m.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
             builder.Property(m => m.Modelo)
                 .IsRequired()
                 .HasMaxLength(25);

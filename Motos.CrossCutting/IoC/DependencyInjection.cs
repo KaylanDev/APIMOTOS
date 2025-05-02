@@ -25,6 +25,7 @@ namespace Motos.CrossCutting.IoC
             services.AddScoped<IMotosRepository, MotosMRepository>();
             services.AddScoped<IMarcaRepository, MarcaRepository>();
             services.AddScoped<IMotosMService, MotosMService>();
+            services.AddScoped<IMarcaService, MarcaService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         
             return services;

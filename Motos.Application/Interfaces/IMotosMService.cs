@@ -16,7 +16,7 @@ public interface IMotosMService
     public Task<IEnumerable<MotosDTO>> GetMotos();
     public Task<MotosDTO> GetById(Expression<Func<MotosM, bool>> predicate);
     public Task<MotosM> GetByIdSemDTO(Expression<Func<MotosM, bool>> predicate);
-    public Task<MotosDTO> Create(MotosM moto);
+    public Task<MotosDTO> Create(MotosDTO moto);
     public Task<MotosDTO> Update(MotosM moto);
     public Task<MotosDTO> Pacth(JsonPatchDocument<MotosM> jsonPatch, int id);
     public Task<MotosDTO> Delete(int id);

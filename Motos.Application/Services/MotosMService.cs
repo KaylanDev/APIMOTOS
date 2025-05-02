@@ -13,21 +13,25 @@ namespace Motos.Application.Services
     public class MotosMService : IMotosMService
     {
         private readonly IMotosRepository _motosRepository;
+        private readonly IMarcaRepository _marcaRepository;
 
         
 
-        public MotosMService( IMotosRepository marcaRepository)
+        public MotosMService( IMotosRepository MotosRepository,IMarcaRepository marcaRepository)
         {
-            _motosRepository = marcaRepository;
+            _motosRepository = MotosRepository;
+            _marcaRepository = marcaRepository;
         }
 
-        public async Task<MotosDTO> Create(MotosM moto)
+        public async Task<MotosDTO> Create(MotosDTO motoDto)
         {
            
-            if (moto is null) throw new ArgumentNullException(nameof(moto));
-          await  _motosRepository.Create(moto);
-
-            return MotosDTO.MotosMToDto(moto);
+            if (motoDto is null) throw new ArgumentNullException(nameof(motoDto));
+            motoDto.MarcaM = await _marcaRepository.GetByIdAsync(m => m.NomeMarca == motoDto.Marca);
+            var moto = MotosDTO.MotosDTOToMotosM(motoDto);
+          var motoca =  await  _motosRepository.Create(moto);
+            motoDto = MotosDTO.MotosMToDto(motoca);
+            return motoDto;
         }
 
         public async Task<MotosDTO> Delete(int id)

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Motos.API.Model;
 using Motos.Application.Interfaces;
 using Motos.Domain.Entities;
-
+using Microsoft.AspNetCore.Http;
+using Motos.Application.DTO;
 
 namespace Motos.API.Controllers
 {
@@ -21,11 +22,15 @@ namespace Motos.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Get()
         {
             var motos = await _motosService.GetMotos();
 
-           
+            if (motos is null) return BadRequest("Object is null!");
+
             return Ok(motos);
         }
 
@@ -57,12 +62,12 @@ namespace Motos.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(MotosM moto)
+        public async Task<ActionResult> Post(MotosDTO motodDto)
         {
             if (!ModelState.IsValid) return BadRequest();
-            await _motosService.Create(moto);
+           var motoca = await _motosService.Create(motodDto);
           
-            return Ok(moto);
+            return Ok(motoca);
         }
    
 

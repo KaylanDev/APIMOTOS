@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Motos.Domain.Entities;
+using Motos.Infrastruture.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,10 @@ namespace Motos.Infrastruture.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+            modelBuilder.ApplyConfiguration(new MotosMConfiguration());
+            modelBuilder.ApplyConfiguration(new MarcaConfiguration());
+
+
         }
     }
 }
