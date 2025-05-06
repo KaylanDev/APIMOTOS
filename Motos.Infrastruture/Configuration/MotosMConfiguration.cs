@@ -27,15 +27,15 @@ namespace Motos.Infrastruture.Configuration
 
             builder.Property(m => m.Preco)
                 .HasColumnType("decimal(18,2)").IsRequired();
-            
+
             builder.Property(m => m.Imagem)
                     .IsRequired()
                     .HasMaxLength(500);
+            builder.HasOne(m => m.Marca)
+       .WithMany(m => m.Motos)
+       .HasForeignKey(m => m.MarcaId)
+       .OnDelete(DeleteBehavior.Restrict); // Evita exclusão em cascata
 
-            builder.HasOne<Marca>().WithMany(m => m.Motos)
-                .HasForeignKey(m => m.Id)
-
-                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

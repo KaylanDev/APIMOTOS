@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Motos.Infrastruture.Context;
 
@@ -10,9 +11,11 @@ using Motos.Infrastruture.Context;
 namespace Motos.Infrastruture.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250506005243_DropCOlumId")]
+    partial class DropCOlumId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,8 +48,6 @@ namespace Motos.Infrastruture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Imagem")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -75,10 +76,15 @@ namespace Motos.Infrastruture.Migrations
 
             modelBuilder.Entity("Motos.Domain.Entities.MotosM", b =>
                 {
-                    b.HasOne("Motos.Domain.Entities.Marca", "Marca")
+                    b.HasOne("Motos.Domain.Entities.Marca", null)
                         .WithMany("Motos")
-                        .HasForeignKey("MarcaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Motos.Domain.Entities.Marca", "Marca")
+                        .WithMany()
+                        .HasForeignKey("MarcaId");
 
                     b.Navigation("Marca");
                 });

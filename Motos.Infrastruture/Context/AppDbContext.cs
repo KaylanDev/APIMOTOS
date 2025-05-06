@@ -22,9 +22,7 @@ namespace Motos.Infrastruture.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-            modelBuilder.ApplyConfiguration(new MotosMConfiguration());
-            modelBuilder.ApplyConfiguration(new MarcaConfiguration());
-
+           
 
         }
     }
