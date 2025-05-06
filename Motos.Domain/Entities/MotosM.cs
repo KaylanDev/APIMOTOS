@@ -6,7 +6,7 @@ namespace Motos.Domain.Entities;
 public class MotosM 
 {
 
-    [Key]
+    [Key ]
     public int Id { get; set; }
     public string? Modelo { get; set; }
     
