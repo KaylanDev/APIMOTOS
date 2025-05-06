@@ -15,32 +15,32 @@ public class MotosDTO
 
     public decimal Preco { get; set; }
     public string? Marca { get; set; }
-    [JsonIgnore]
-    public Marca? MarcaM { get;  set; } 
+
     public string? Imagem { get; set; }
 
-    public MotosDTO(int id, string? modelo, int potencia, decimal preco, string? marca, string? imagem,Marca marca1)
+    public MotosDTO()
     {
-        Id = id;
-        Modelo = modelo;
-        Potencia = potencia;
-        Preco = preco;
-        Marca = marca;
-        Imagem = imagem;
-        MarcaM = marca1;
+        
     }
-
-    public static MotosDTO MotosMToDto(MotosM moto)
+    public static implicit operator MotosDTO(MotosM moto)
     {
 
-        var motoDto = new MotosDTO(moto.Id, moto.Modelo, moto.Potencia, moto.Preco, moto.Marca.NomeMarca, moto.Imagem,moto.Marca);
-       
+        var motoDto = new MotosDTO
+        {
+            Id = moto.Id,
+            Modelo = moto.Modelo,
+            Potencia = moto.Potencia,
+            Preco = moto.Preco,
+            Imagem = moto.Imagem,
+            Marca = moto.Marca?.NomeMarca
+        };
+
 
         return motoDto;
 
     }
 
-    public static MotosM MotosDTOToMotosM(MotosDTO motoDto)
+    public static implicit operator MotosM(MotosDTO motoDto)
     {
         var moto = new MotosM
         {
@@ -49,15 +49,15 @@ public class MotosDTO
             Potencia = motoDto.Potencia,
             Preco = motoDto.Preco,
             Imagem = motoDto.Imagem,
-            MarcaId = motoDto.MarcaM.Id,
-            Marca = motoDto.MarcaM
 
         };
-
         return moto;
-
     }
 
+
+
+
+    
 
     public static IEnumerable<MotosDTO> MotosMToDtoList(IEnumerable<MotosM> motos)
     {
@@ -65,7 +65,7 @@ public class MotosDTO
         foreach (var moto in motos)
         {
 
-            var dto = MotosMToDto(moto);
+            MotosDTO dto = moto;
             motosDto.Add(dto);
         }
 
@@ -74,5 +74,6 @@ public class MotosDTO
         return m;
 
     }
+    
 
 }

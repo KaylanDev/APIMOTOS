@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace MotosxUnitTeste
 {
-   public class MotosTestexUnit : IClassFixture<MotosxUnitController>
+   public class GetMotosxUnit : IClassFixture<MotosxUnitController>
     {
         private readonly MotosMController controller;
 
-        public MotosTestexUnit(MotosxUnitController conntroler)
+        public GetMotosxUnit(MotosxUnitController conntroler)
         {
             controller = new MotosMController(conntroler.motos);
         }
@@ -48,5 +48,16 @@ namespace MotosxUnitTeste
             //Assert
             data.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be(200);
         }
+
+        [Fact]
+        public async Task GetById_return_BadRequest()
+        {
+            //Act
+            var data = await controller.GetById(0);
+            //Assert
+            data.Should().BeOfType<BadRequestObjectResult>().Which.StatusCode.Should().Be(400);
+        }
+
+
     }
 }

@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Motos.Domain.Entities;
 using Microsoft.AspNetCore.JsonPatch;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 
 namespace Motos.Application.Services
@@ -15,7 +16,23 @@ namespace Motos.Application.Services
         private readonly IMotosRepository _motosRepository;
         private readonly IMarcaRepository _marcaRepository;
 
-        
+        private async Task<MotosM> AddMarca(MotosM motosM)
+        {
+            Marca marca = await _marcaRepository.GetByIdAsync(m => m.Id == motosM.MarcaId);
+          motosM.Marca = marca;
+            return motosM;
+        }
+
+        private async Task<IEnumerable<MotosM>> AddMarcaList(IEnumerable<MotosM>motosM)
+        {
+            foreach(var moto in motosM){
+
+
+                Marca marca = await _marcaRepository.GetByIdAsync(m => m.Id == moto.MarcaId);
+                moto.Marca = marca;
+            }
+            return motosM;
+        }
 
         public MotosMService( IMotosRepository MotosRepository,IMarcaRepository marcaRepository)
         {
@@ -27,11 +44,15 @@ namespace Motos.Application.Services
         {
            
             if (motoDto is null) throw new ArgumentNullException(nameof(motoDto));
-            motoDto.MarcaM = await _marcaRepository.GetByIdAsync(m => m.NomeMarca == motoDto.Marca);
-            var moto = MotosDTO.MotosDTOToMotosM(motoDto);
-          var motoca =  await  _motosRepository.Create(moto);
-            motoDto = MotosDTO.MotosMToDto(motoca);
+           var Marca = await _marcaRepository.GetByIdAsync(m => m.NomeMarca.ToUpper() == motoDto.Marca.ToUpper());
+            if(Marca is null) throw new ArgumentNullException("esta marca  N Existe!");
+            MotosM moto = motoDto;
+           
+            moto.MarcaId = Marca.Id;
+            await _motosRepository.Create(moto);
+
             return motoDto;
+            
         }
 
         public async Task<MotosDTO> Delete(int id)
@@ -39,27 +60,31 @@ namespace Motos.Application.Services
             var moto = await _motosRepository.GetByIdAsync(m => m.Id == id);
             if (moto is null) throw new ArgumentNullException(nameof(moto));
             await _motosRepository.Delete(moto);
-            return MotosDTO.MotosMToDto(moto);
+            MotosDTO motoDto =  moto;
+
+            return motoDto;
         }
 
         public async Task<MotosDTO> GetById(Expression<Func<MotosM, bool>> predicate)
         {
            var moto = await _motosRepository.GetByIdAsync(predicate);
-            return MotosDTO.MotosMToDto(moto);
+           await AddMarca(moto);
+            MotosDTO motoDto = moto;
+
+            return motoDto;
+
         }
 
-        public async Task<MotosM> GetByIdSemDTO(Expression<Func<MotosM, bool>> predicate)
-        {
-            var moto = await _motosRepository.GetByIdAsync(predicate);
-            return moto;
-        }
+      
 
 
         public async Task<IEnumerable<MotosDTO>> GetMotos()
         {
             var motos = await _motosRepository.GetAsync();
             if (motos is null)throw new ArgumentNullException(nameof(motos));
-            return  MotosDTO.MotosMToDtoList(motos);
+            var motosCmarca = await AddMarcaList(motos);
+            var motosDto = MotosDTO.MotosMToDtoList(motos);
+            return  motosDto;
             
 
         }
@@ -68,19 +93,23 @@ namespace Motos.Application.Services
         {
             var moto = await _motosRepository.GetByIdAsync(m => m.Id == id);
             if (moto is null) throw new ArgumentNullException(nameof(moto));
+          await  AddMarca(moto);
             jsonPatch.ApplyTo(moto);
-            var motoDTO= MotosDTO.MotosMToDto(moto);
+            MotosDTO motoDTO= moto;
+
             return motoDTO;
         }
 
-        public async Task<MotosDTO> Update(MotosM moto)
+        public async Task<MotosDTO> Update(MotosDTO moto)
         {
            var motoComum = await _motosRepository.GetByIdAsync(m => m.Id == moto.Id);
+            await AddMarca(motoComum);
             if (motoComum is null) throw new ArgumentNullException(nameof(motoComum));
             await _motosRepository.Update(motoComum);
-            return MotosDTO.MotosMToDto(motoComum);
+            MotosDTO motoDto = motoComum;
+            return motoDto;
         }
 
-        
+
     }
 }

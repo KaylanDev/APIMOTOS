@@ -35,7 +35,10 @@ namespace Motos.API.Controllers
         }
 
         [HttpGet("{id:int}",Name = "Moto")]
-       public async Task<ActionResult> GetById(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> GetById(int id)
         {
             if (id <= 0)
             {
@@ -43,6 +46,7 @@ namespace Motos.API.Controllers
             }
 
             var moto = await _motosService.GetById(m => m.Id == id);
+           
             if (moto is null) return BadRequest("Object is null!");
             
 
@@ -50,11 +54,14 @@ namespace Motos.API.Controllers
         }
 
         [HttpPatch("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Patch(JsonPatchDocument<MotosM> jsonPatch,int id)
         {
             var moto = await _motosService.Pacth(jsonPatch, id);
             if (moto is null || !ModelState.IsValid) return BadRequest();
-          var motoDto = await _motosService.GetByIdSemDTO(m => m.Id == moto.Id);
+          var motoDto = await _motosService.GetById(m => m.Id == moto.Id);
             if (motoDto is null) return BadRequest("Object is null!");
             await  _motosService.Update(motoDto);
          
@@ -62,17 +69,21 @@ namespace Motos.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Post(MotosDTO motodDto)
         {
             if (!ModelState.IsValid) return BadRequest();
            var motoca = await _motosService.Create(motodDto);
-          
+
+
             return Ok(motoca);
         }
    
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(MotosM moto, int id)
+        public async Task<ActionResult> Put(MotosDTO moto, int id)
         {
             if (id != moto.Id) return BadRequest("insira o id correto");
            await _motosService.Update(moto);
