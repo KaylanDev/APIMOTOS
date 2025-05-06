@@ -20,8 +20,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 }
     ).AddNewtonsoftJson();
-
-
+//resolver dps
+/*builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();*/
 
 builder.Services.Addinfrastruture(builder.Configuration);
 
