@@ -64,7 +64,7 @@ namespace Motos.API.Controllers
             return Ok(marca)
                 ;
         }
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(Marca marca)
         {
             if (!ModelState.IsValid) return BadRequest();
