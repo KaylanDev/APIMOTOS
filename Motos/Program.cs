@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Motos.API.Model.Validator;
+using Newtonsoft.Json;
 
 using Motos.CrossCutting.IoC;
 using System.Text.Json.Serialization;
@@ -19,7 +20,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 }
-    ).AddNewtonsoftJson();
+    ).AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    });
 //resolver dps
 /*builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();*/

@@ -13,40 +13,71 @@ namespace Motos.API.Controllers
     [ApiController]
     public class MarcaController : ControllerBase
     {
-        private readonly IMarcaService _uof;
+        private readonly IMarcaService _marcaService;
 
         public MarcaController(IMarcaService uof)
         {
-            _uof = uof;
+            _marcaService = uof;
         }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-           var marcas = await _uof.GetMarcas();
+            var marcas = await _marcaService.GetMarcas();
 
             return Ok(marcas);
         }
 
-       /*[HttpGet("MOTOS DA MARCA")]
-        public Task<ActionResult> getMarcas()
+        [HttpGet("GetMotos")]
+        public async Task<ActionResult> GetMarcaMotos()
         {
-            var motos = _motosService.
-            return Ok(motos);
+            var marcas = await _marcaService.GetMotosPorMarca();
+
+            return Ok(marcas);
         }
-        */
+        
+        [HttpGet("GetMotosById")]
+        public async Task<ActionResult> GetOneMarcaMotos(int id)
+        {
+            var marca = await _marcaService.GetMotoPorMarcaOne(id);
+
+
+            return Ok(marca);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetByID(int id)
+        {
+            var marca = await _marcaService.GetById(id);
+
+            return Ok(marca);
+        }
+        
         [HttpPost]
         public async Task<ActionResult> Post(Marca marca) {
 
             if (!ModelState.IsValid) return BadRequest();
 
 
-          await _uof.Create(marca);
+          await _marcaService.Create(marca);
            
             return Ok(marca)
                 ;
         }
+        [HttpPut]
+        public async Task<ActionResult> Put(Marca marca)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            var marcaUp = await _marcaService.Update(marca);
+            return Ok(marcaUp);
+        }
 
-
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest("Id is invalid!");
+            var marcaDel = await _marcaService.Delete(id);
+            return Ok(marcaDel);
+        }
     }
 }

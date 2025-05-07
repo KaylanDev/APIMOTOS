@@ -1,4 +1,6 @@
-﻿using Motos.Application.Interfaces;
+﻿using Motos.Application.DTO;
+using Motos.Application.DTOs;
+using Motos.Application.Interfaces;
 using Motos.Domain.Entities;
 using Motos.Domain.Interfaces;
 using System;
@@ -18,32 +20,62 @@ namespace Motos.Application.Services
         {
             _marcaRepository = marcaRepository;
         }
-        public Task<Marca> Create(Marca marca)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Marca> Delete(int id)
+        public Task<Marca> GetById(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Marca> GetById(Expression<Func<Marca, bool>> predicate)
-        {
-            var marca = _marcaRepository.GetByIdAsync(predicate);
+            var marca = _marcaRepository.GetByIdAsync(m => m.Id == id);
             return marca;
         }
 
-     
 
-        public Task<IEnumerable<Marca>> GetMarcas()
+        public async Task<IEnumerable<Marca>> GetMarcas()
         {
-            throw new NotImplementedException();
+         
+            var marcas = await _marcaRepository.GetAsync();
+            return marcas;
         }
 
-        public Task<Marca> Update(Marca marca)
+        public async Task<Marca> Update(Marca marca)
         {
-            throw new NotImplementedException();
+            if(marca is null) throw new ArgumentNullException(nameof(marca));
+
+            var marcaUp = await _marcaRepository.Update(marca);
+            return marcaUp;
+
+        }
+        public Task<Marca> Create(Marca marca)
+        {
+           if (marca is null) throw new ArgumentNullException(nameof(marca));
+            var marcaUp = _marcaRepository.Create(marca);
+            return marcaUp;
+        }
+
+        public async Task<Marca> Delete(int id)
+        {
+            var marca = await _marcaRepository.GetByIdAsync(m => m.Id == id);
+            if (marca is null) throw new ArgumentNullException(nameof(marca));
+            var marcaDel = await _marcaRepository.Delete(marca);
+            return marcaDel;
+        }
+
+        public async Task<IEnumerable<MarcaDTO>> GetMotosPorMarca()
+        {
+           var marcasCMotos = await _marcaRepository.GetMotosByMarca();
+            var MarcasDto = MarcaDTO.MarcaToMarcaDTOList(marcasCMotos);
+            foreach(var marca in MarcasDto)
+            {
+                var moto = marcasCMotos.FirstOrDefault(m => m.Id == marca.Id);
+                marca.Motos = MotosDTO.MotosMToDtoList(moto.Motos);
+            }
+            return MarcasDto;
+        }
+
+        public async Task<MarcaDTO> GetMotoPorMarcaOne(int id)
+        {
+            var marca = await _marcaRepository.GetMotosByMarcaOne(m => m.Id == id);
+            MarcaDTO marcaDto = marca;
+            marcaDto.Motos = MotosDTO.MotosMToDtoList(marca.Motos);
+            return marcaDto;
         }
     }
 }
