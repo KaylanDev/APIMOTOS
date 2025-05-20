@@ -18,7 +18,7 @@ namespace MotosxUnitTeste.Motos_ApplicationTeste
         public PostMotosxUnit(MotosxUnitController controller)
         {
 
-           this.controller = new MotosMController(controller.motos);
+           this.controller = new MotosMController(controller.motos,controller.cacheService);
         }
 
         [Fact]

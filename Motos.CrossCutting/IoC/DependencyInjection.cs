@@ -2,10 +2,12 @@
 
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Motos.API.Model.Validator;
 using Motos.Application.Interfaces;
+using Motos.Application.Service;
 using Motos.Application.Services;
 using Motos.Domain.Entities;
 using Motos.Domain.Interfaces;
@@ -32,6 +34,7 @@ namespace Motos.CrossCutting.IoC
             services.AddScoped<IMotosMService, MotosMService>();
             services.AddScoped<IMarcaService, MarcaService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<ICacheService,CacheService>();
         
             return services;
         }

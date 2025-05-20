@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 using Motos.CrossCutting.IoC;
 using System.Text.Json.Serialization;
+using Motos.API.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 //resolver dps
 /*builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();*/
+
+builder.Services.AddMemoryCache();
 
 builder.Services.Addinfrastruture(builder.Configuration);
 

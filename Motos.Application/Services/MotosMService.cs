@@ -65,9 +65,9 @@ namespace Motos.Application.Services
             return motoDto;
         }
 
-        public async Task<MotosDTO> GetById(Expression<Func<MotosM, bool>> predicate)
+        public async Task<MotosDTO> GetById(int id)
         {
-           var moto = await _motosRepository.GetByIdAsync(predicate);
+           var moto = await _motosRepository.GetByIdAsync(m => m.Id == id);
            await AddMarca(moto);
             MotosDTO motoDto = moto;
 
@@ -102,7 +102,7 @@ namespace Motos.Application.Services
 
         public async Task<MotosDTO> Update(MotosDTO moto)
         {
-           var motoComum = await _motosRepository.GetByIdAsync(m => m.Id == moto.Id);
+            var motoComum = moto;
             await AddMarca(motoComum);
             if (motoComum is null) throw new ArgumentNullException(nameof(motoComum));
             await _motosRepository.Update(motoComum);

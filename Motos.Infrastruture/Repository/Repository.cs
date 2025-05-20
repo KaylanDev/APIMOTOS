@@ -19,6 +19,19 @@ namespace Motos.Infrastruture.Repository
             _context = context;
         }
 
+        public async Task<IEnumerable<T>> GetAsync()
+        {
+
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)
+        {
+          await  Task.Delay(5000);
+            var entry =   await _context.Set<T>().FirstOrDefaultAsync(predicate);
+            return entry;
+        }
+
         public async Task<T> Create(T entry)
         {
             _context.Set<T>().Add(entry);
@@ -30,18 +43,6 @@ namespace Motos.Infrastruture.Repository
         {
             _context.Set<T>().Remove(entry);
             await _context.SaveChangesAsync();
-            return entry;
-        }
-
-        public async Task<IEnumerable<T>> GetAsync()
-        {
-            
-            return await _context.Set<T>().ToListAsync();
-        }
-
-        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)
-        {
-            var entry =   await _context.Set<T>().FirstOrDefaultAsync(predicate);
             return entry;
         }
 

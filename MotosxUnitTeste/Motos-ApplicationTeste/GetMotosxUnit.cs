@@ -17,7 +17,7 @@ namespace MotosxUnitTeste
 
         public GetMotosxUnit(MotosxUnitController conntroler)
         {
-            controller = new MotosMController(conntroler.motos);
+            controller = new MotosMController(conntroler.motos,conntroler.cacheService);
         }
 
         [Fact]

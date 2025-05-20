@@ -14,7 +14,7 @@ namespace Motos.Application.Interfaces;
 public interface IMotosMService
 {
     public Task<IEnumerable<MotosDTO>> GetMotos();
-    public Task<MotosDTO> GetById(Expression<Func<MotosM, bool>> predicate);
+    public Task<MotosDTO> GetById(int id);
     public Task<MotosDTO> Create(MotosDTO moto);
     public Task<MotosDTO> Update(MotosDTO moto);
     public Task<MotosDTO> Pacth(JsonPatchDocument<MotosM> jsonPatch, int id);
