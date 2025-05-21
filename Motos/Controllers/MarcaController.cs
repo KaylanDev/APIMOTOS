@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Motos.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("marca")]
     [ApiController]
     public class MarcaController : ControllerBase
     {

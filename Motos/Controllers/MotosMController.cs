@@ -10,7 +10,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Motos.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("motos")]
     [ApiController]
     public class MotosMController : ControllerBase
     {

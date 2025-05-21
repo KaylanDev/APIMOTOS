@@ -27,7 +27,7 @@ namespace Motos.Infrastruture.Repository
 
         public async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)
         {
-          await  Task.Delay(5000);
+          
             var entry =   await _context.Set<T>().FirstOrDefaultAsync(predicate);
             return entry;
         }

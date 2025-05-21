@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Motos.CrossCutting.IoC;
 using System.Text.Json.Serialization;
 using Motos.API.Service;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,24 @@ builder.Services.AddControllers().AddJsonOptions(options =>
                 .AddFluentValidationClientsideAdapters();*/
 
 builder.Services.AddMemoryCache();
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["JWT:issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:secret"])),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 
 builder.Services.Addinfrastruture(builder.Configuration);
 
@@ -55,7 +74,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors();
-
+app.UseAuthentication(); // DEVE VIR ANTES DE app.UseAuthorization()
 app.UseAuthorization();
 
 app.MapControllers();

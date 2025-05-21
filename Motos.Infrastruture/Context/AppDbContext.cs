@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Motos.Domain.Entities;
+
 using Motos.Infrastruture.Configuration;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Motos.Infrastruture.Context
 {
-  public  class AppDbContext : DbContext
+  public  class AppDbContext : IdentityDbContext<ApplicationUser,ApplicationRoles,string>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
