@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Motos.Domain.Entities;
 
-namespace Motos.API.Model.Validator
+namespace Motos.Application.Validator
 {
     public class MotoValidator : AbstractValidator<MotosM>
     {
