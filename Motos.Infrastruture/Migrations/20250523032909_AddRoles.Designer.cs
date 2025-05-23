@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Motos.Infrastruture.Context;
 
@@ -11,9 +12,11 @@ using Motos.Infrastruture.Context;
 namespace Motos.Infrastruture.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250523032909_AddRoles")]
+    partial class AddRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,13 +110,6 @@ namespace Motos.Infrastruture.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "4"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -263,23 +259,6 @@ namespace Motos.Infrastruture.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c7331179-06a2-4b04-84dd-f64f9689fa44",
-                            EmailConfirmed = false,
-                            FullName = "Kaylan alexandre de paula sathler",
-                            LockoutEnabled = false,
-                            NormalizedUserName = "KAYLAN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMZ57cR8Zuw29LroyRIPeGlFW/X8I25aQ1aAdsG17XTPxwJtjOHLXV91pLzSYM4SpA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "185ced58-529c-4389-b30a-ab40073d5a9f",
-                            TwoFactorEnabled = false,
-                            UserName = "Kaylan"
-                        });
                 });
 
             modelBuilder.Entity("Motos.Domain.Entities.Marca", b =>
