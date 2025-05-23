@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Motos.API.Model;
+using Motos.API;
 using Motos.Application.Interfaces;
 using Motos.Domain.Entities;
 using Microsoft.AspNetCore.Http;

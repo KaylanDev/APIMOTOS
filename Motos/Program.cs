@@ -1,12 +1,12 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.EntityFrameworkCore;
-using Motos.API.Model.Validator;
+using Motos.API;
 using Newtonsoft.Json;
 
 using Motos.CrossCutting.IoC;
 using System.Text.Json.Serialization;
-using Motos.API.Service;
+using Microsoft.IdentityModel;
+using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,7 +56,42 @@ builder.Services.Addinfrastruture(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    // Informações básicas da API no Swagger UI
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Sua API de Projeto", Version = "v1" });
+
+    // 1. Definir o esquema de segurança JWT Bearer
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization", // Nome do cabeçalho
+        Type = SecuritySchemeType.Http, // Tipo de esquema (HTTP)
+        Scheme = "Bearer", // Nome do esquema (Bearer)
+        BearerFormat = "JWT", // Formato do token
+        In = ParameterLocation.Header, // Onde o token será enviado (no cabeçalho)
+        Description = "Autenticação JWT usando o esquema Bearer.\n\nDigite 'Bearer ' [espaço] e então seu token.\n\nExemplo: \"Bearer seu.token.aqui\""
+    });
+
+    // 2. Adicionar o requisito de segurança para todas as operações
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer" // ID do esquema de segurança definido acima
+                }
+            },
+            new string[] {} // Escopos necessários para a operação (vazio para JWT simples)
+        }
+    });
+
+    // Se você adicionou Swashbuckle.AspNetCore.Annotations:
+    // options.EnableAnnotations(); // Habilita o uso de atributos como [SwaggerOperation], [SwaggerParameter]
+});
+
 
 
 

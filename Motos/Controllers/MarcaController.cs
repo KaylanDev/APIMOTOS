@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Motos.API.Model;
+using Motos.API;
 
 using Motos.Application.Interfaces;
 using Motos.Domain.Entities;
